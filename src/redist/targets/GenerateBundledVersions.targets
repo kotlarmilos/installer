@@ -275,6 +275,7 @@
       <Crossgen2SupportedRids Include="@(Net60Crossgen2SupportedRids)" />
 
       <!-- Match the Crossgen2 RIDs although some are currently not supported in NativeAOT. Its better for the SDK not to block on the RIDs and let NativeAOT manage the experience -->
+      <ILCompiler70SupportedRids Include="@(Net60Crossgen2SupportedRids)" />
       <ILCompilerSupportedRids Include="@(Net80ILCompilerSupportedRids)" />
 
       <AspNetCore31RuntimePackRids Include="@(AspNetCore30RuntimePackRids)" />
@@ -549,7 +550,7 @@ Copyright (c) .NET Foundation. All rights reserved.
                          TargetFramework="net7.0"
                          ILCompilerPackNamePattern="runtime.**RID**.Microsoft.DotNet.ILCompiler"
                          ILCompilerPackVersion="$(_NET70RuntimePackVersion)"
-                         ILCompilerRuntimeIdentifiers="@(ILCompilerSupportedRids, '%3B')"
+                         ILCompilerRuntimeIdentifiers="@(ILCompiler70SupportedRids, '%3B')"
                          />
 
     <KnownILLinkPack Include="Microsoft.NET.ILLink.Tasks"
