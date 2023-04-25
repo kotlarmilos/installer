@@ -258,12 +258,12 @@
           win-x86;
           " />
 
-        <Net80ILCompilerSupportedRids Include="
-          @(Net60Crossgen2SupportedRids);
-          ios-arm64;
-          iossimulator-arm64;
-          iossimulator-x64;
-          " />
+      <Net80ILCompilerSupportedRids Include="
+        @(Net60Crossgen2SupportedRids);
+        ios-arm64;
+        iossimulator-arm64;
+        iossimulator-x64;
+        " />
 
       <Crossgen2SupportedRids Include="@(Net60Crossgen2SupportedRids)" />
 
