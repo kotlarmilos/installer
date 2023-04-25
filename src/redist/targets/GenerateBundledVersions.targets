@@ -259,11 +259,18 @@
           " />
 
       <Net80ILCompilerSupportedRids Include="
-        @(Net60Crossgen2SupportedRids);
-        ios-arm64;
-        iossimulator-arm64;
-        iossimulator-x64;
-        " />
+          @(Net60Crossgen2SupportedRids);
+          ios-arm64;
+          ios-arm;
+          iossimulator-arm64;
+          iossimulator-x64;
+          iossimulator-x86;
+          tvos-arm64;
+          tvossimulator-arm64;
+          tvossimulator-x64;
+          maccatalyst-x64;
+          maccatalyst-arm64;
+          " />
 
       <Crossgen2SupportedRids Include="@(Net60Crossgen2SupportedRids)" />
 
