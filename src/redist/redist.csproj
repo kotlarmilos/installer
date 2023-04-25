@@ -5,6 +5,7 @@
     <CopyBuildOutputToPublishDirectory>false</CopyBuildOutputToPublishDirectory>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <ResolveAssemblyReferencesSilent>true</ResolveAssemblyReferencesSilent>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>none</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,5 +49,4 @@
   <Import Project="targets\GeneratePKG.targets" />
   <Import Project="targets\GenerateInstallers.targets" />
   <Import Project="targets\Badge.targets" />
-  <Import Project="targets\Checksum.targets" />
 </Project>

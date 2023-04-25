@@ -4,7 +4,6 @@
   <UsingTask AssemblyFile="$(LeakDetectionTasksAssembly)" TaskName="CheckForPoison" />
   <UsingTask AssemblyFile="$(XPlatSourceBuildTasksAssembly)" TaskName="WriteUsageBurndownData" />
   <UsingTask AssemblyFile="$(XPlatSourceBuildTasksAssembly)" TaskName="ReplaceTextInFile" />
-  <UsingTask AssemblyFile="$(XPlatSourceBuildTasksAssembly)" TaskName="DownloadFileSB" />
 
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 
@@ -12,13 +11,6 @@
     <Message Text="Build Environment: $(Platform) $(Configuration) $(TargetOS) $(TargetRid)" />
 
     <MSBuild Projects="$(RepoProjectsDir)$(RootRepo).proj" Targets="Build" BuildInParallel="$(BuildInParallel)" StopOnFirstFailure="true" />
-  </Target>
-
-  <Target Name="RunRepoTests" DependsOnTargets="PrepareOutput;InitBuild">
-    <Message Text="Build Environment: $(Platform) $(Configuration) $(TargetOS) $(TargetRid)" />
-
-    <MSBuild Projects="$(RepoProjectsDir)$(RootRepoTests).proj" Targets="Build" Properties="PrepForTests=true;SkipEnsurePackagesCreated=true" BuildInParallel="$(BuildInParallel)" StopOnFirstFailure="true" />
-    <MSBuild Projects="$(RepoProjectsDir)$(RootRepoTests).proj" Targets="Build" Properties="RunTests=true;SkipEnsurePackagesCreated=true" BuildInParallel="$(BuildInParallel)" StopOnFirstFailure="true" />
   </Target>
 
   <Target Name="PrepareOutput">
@@ -123,7 +115,7 @@
           Condition="'$(SkipSmokeTestPrereqsTarballCreation)' != 'true'"
           DependsOnTargets="
             CheckIfCreateSmokeTestPrereqsExistToPack;
-            CreateCreateSmokeTestPrereqsTarballIfPrereqsExist"/>
+            CreateSmokeTestPrereqsTarballIfPrereqsExist"/>
 
   <Target Name="CheckIfCreateSmokeTestPrereqsExistToPack">
     <PropertyGroup>
@@ -138,10 +130,11 @@
     <Message Text="Found @(SmokeTestsPrereqs->Count()) prereqs in '$(SmokeTestsPackagesDir)'." Importance="High" />
   </Target>
 
-  <Target Name="CreateCreateSmokeTestPrereqsTarballIfPrereqsExist"
+  <Target Name="CreateSmokeTestPrereqsTarballIfPrereqsExist"
+          DependsOnTargets="DetermineMicrosoftSourceBuildIntermediateInstallerVersion"
           Condition="'@(SmokeTestsPrereqs->Count())' != '0'">
     <PropertyGroup>
-      <SmokeTestPrereqsTarballName>$(OutputPath)dotnet-smoke-test-prereqs.$(installerOutputPackageVersion).$(TargetRid).tar.gz</SmokeTestPrereqsTarballName>
+      <SmokeTestPrereqsTarballName>$(OutputPath)dotnet-smoke-test-prereqs.$(MicrosoftSourceBuildIntermediateInstallerVersion).$(TargetRid).tar.gz</SmokeTestPrereqsTarballName>
       <SmokeTestsPrereqPackagesDir>$(SmokeTestsArtifactsDir)prereq-packages/</SmokeTestsPrereqPackagesDir>
     </PropertyGroup>
 
@@ -195,9 +188,10 @@
   </Target>
 
   <Target Name="CreatePrebuiltsTarballIfPrebuiltsExist"
+          DependsOnTargets="DetermineMicrosoftSourceBuildIntermediateInstallerVersion"
           Condition="'@(PrebuiltFile->Count())' != '0'">
     <PropertyGroup>
-      <TarballFilePath>$(OutputPath)$(SourceBuiltPrebuiltsTarballName).$(installerOutputPackageVersion).$(TargetRid).tar.gz</TarballFilePath>
+      <TarballFilePath>$(OutputPath)$(SourceBuiltPrebuiltsTarballName).$(MicrosoftSourceBuildIntermediateInstallerVersion).$(TargetRid).tar.gz</TarballFilePath>
       <TarballWorkingDir>$(ResultingPrebuiltPackagesDir)</TarballWorkingDir>
     </PropertyGroup>
 

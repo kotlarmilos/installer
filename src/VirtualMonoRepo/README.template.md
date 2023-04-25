@@ -139,11 +139,14 @@ ln -s $HOME/.dotnet/dotnet /usr/bin/dotnet
 
 You can also utilize [GitHub Codespaces](https://github.com/features/codespaces) where you can find preset containers in this repository.
 
-### Exporting a source archive
+### Building from released sources
 
-In case you'd like to export a more lightweight archive of sources that can be built outside of this git repository, a simple copy of the working tree won't do.
-The build is using some git metadata (information from the `.git` directory) that are needed to be kept with the sources.
-To export a `tar.gz` archive of the sources, you need to use the `eng/pack-sources.sh` script from within a clone of the VMR checked out at the revision that you're interested in.
+You can also build from sources (and not from a context of a git repository), such as the ones you can acquire from a [dotnet/dotnet release](https://github.com/dotnet/dotnet/releases).
+In this case, you need to provide additional information which includes the original repository and commit hash the code was built from so that the SDK can provide a better debugging experience (think the `Step into..` functionality).
+Usually, this means the [dotnet/dotnet repository](https://github.com/dotnet/dotnet) together with the commit the release tag is connected to.
+
+In practice, this means that when calling the main build script, you need to provide additional arguments when building outside of a context of a git repository.  
+Alternatively, you can also provide a manifest file where this information can be read from. This file (`release.json`) can be found attached with the [dotnet/dotnet release](https://github.com/dotnet/dotnet/releases).
 
 ## List of components
 
